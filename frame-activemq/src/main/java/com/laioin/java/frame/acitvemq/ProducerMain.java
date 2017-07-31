@@ -14,9 +14,9 @@ import javax.jms.*;
  */
 public class ProducerMain {
     private static final String url = "tcp://192.168.1.222:61616";
-    private static final String QUEUE_NAME = "topic-ccs-ad";
-    private static final String userName = "ethankserver";
-    private static final String pwd = "serverethank";
+    private static final String QUEUE_NAME = "topic-name";
+    private static final String userName = "name";
+    private static final String pwd = "pwd";
 
     public static void sendMessage() throws Exception {
         try {

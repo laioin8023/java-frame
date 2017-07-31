@@ -19,9 +19,9 @@ public class ConsumerMain {
     private static Logger LGR = LoggerFactory.getLogger(ConsumerMain.class);
 
     private static final String url = "tcp://192.168.1.222:61616";
-    private static final String QUEUE_NAME = "topic-ccs-ad";
-    private static final String userName = "ethankserver";
-    private static final String pwd = "serverethank";
+    private static final String QUEUE_NAME = "topic-name";
+    private static final String userName = "name";
+    private static final String pwd = "pwd";
 
     public static void main(String[] args) throws Exception {
         // 构造ConnectionFactory实例对象，此处采用ActiveMq的实现jar
