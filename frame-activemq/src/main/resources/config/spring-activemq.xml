@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    	http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd">
+
+    <!-- activemq 连接地址 -->
+    <bean id="connFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${activemq.brokerURL}"/> <!-- activemq 地址 -->
+        <property name="userName" value="${activemq.username}"/> <!-- 用户名 -->
+        <property name="password" value="${activemq.password}"/> <!-- 密码 -->
+    </bean>
+
+    <!-- 开启自动注解 -->
+    <context:component-scan base-package="com.laioin.java.frame.activemq.spring"/>
+
+    <!-- activemq 连接池工厂 -->
+    <bean id="pooledConnFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory" ref="connFactory"/>
+    </bean>
+
+    <!-- active 队列名称 -->
+    <bean id="topic-name" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>topic</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 初始化，activemq ，代理对象；通过这个对象的send 方法可以发送数据 -->
+    <bean id="mqAgent" class="com.laioin.java.frame.activemq.spring.ActivemqDefaultAgent">
+        <constructor-arg ref="connFactory"/>
+        <constructor-arg ref="topic-name"/>
+        <!-- 处理消息的 接收者，在onReceive方法里处理，队列的数据 -->
+        <property name="messageReceiver" ref="activemqMessageReceiver"/>
+    </bean>
+
+</beans>
+

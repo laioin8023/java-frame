@@ -12,11 +12,21 @@
     <artifactId>frame-activemq</artifactId>
     <name>${project.artifactId}</name>
 
+    <!-- 公共变量 -->
+    <properties>
+        <activemq.version>5.12.1</activemq.version>
+    </properties>
+    <!-- 插件 -->
     <dependencies>
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-client</artifactId>
-            <version>5.12.1</version>
+            <version>${activemq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>${activemq.version}</version>
         </dependency>
     </dependencies>
 </project>

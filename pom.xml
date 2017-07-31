@@ -13,6 +13,22 @@
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
 
+    <!-- 公共变量 -->
+    <properties>
+        <spring.version>4.2.5.RELEASE</spring.version>
+    </properties>
+
+    <!-- 插件 -->
+    <dependencies>
+        <!-- spring start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- spring end -->
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

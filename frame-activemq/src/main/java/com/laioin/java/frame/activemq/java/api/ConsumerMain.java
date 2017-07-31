@@ -1,4 +1,4 @@
-package com.laioin.java.frame.acitvemq;
+package com.laioin.java.frame.activemq.java.api;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
