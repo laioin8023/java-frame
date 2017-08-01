@@ -30,7 +30,7 @@
     </bean>
 
     <!-- 初始化，activemq ，代理对象；通过这个对象的send 方法可以发送数据 -->
-    <bean id="mqAgent" class="com.laioin.java.frame.activemq.spring.ActivemqDefaultAgent">
+    <bean id="mqAgent" name="mqAgent" class="com.laioin.java.frame.activemq.spring.ActivemqDefaultAgent">
         <constructor-arg ref="connFactory"/>
         <constructor-arg ref="topic-name"/>
         <!-- 处理消息的 接收者，在onReceive方法里处理，队列的数据 -->

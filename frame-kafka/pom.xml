@@ -9,32 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>frame-activemq</artifactId>
+    <artifactId>frame-kafka</artifactId>
     <name>${project.artifactId}</name>
 
-    <!-- 公共变量 -->
     <properties>
-        <activemq.version>5.12.1</activemq.version>
+        <kafka.version>0.9.0.1</kafka.version>
     </properties>
-    <!-- 插件 -->
+
     <dependencies>
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-client</artifactId>
-            <version>${activemq.version}</version>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>${kafka.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-pool</artifactId>
-            <version>${activemq.version}</version>
-        </dependency>
-
-        <!-- spring start -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- spring end -->
     </dependencies>
 </project>
