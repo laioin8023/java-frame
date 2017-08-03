@@ -10,7 +10,7 @@
 
     <bean id="kafkaAgent" name="kafkaAgent" class="com.laioin.java.frame.kafka.spring.KafkaStringAgent">
         <constructor-arg name="consFile" value="/properties/kafka-cons.properties"/><!-- kafka 消费者配置文件 -->
-        <constructor-arg name="prodFile" value="/properties/-prod.properties"/><!-- kafka 生产者配置文件 -->
+        <constructor-arg name="prodFile" value="/properties/kafka-prod.properties"/><!-- kafka 生产者配置文件 -->
         <property name="messageReceiver" ref="kafkaMessageReceiver"/>
     </bean>
 </beans>
