@@ -16,9 +16,17 @@
     <properties>
         <thrift.version>0.9.2</thrift.version>
         <gson.version>2.6.2</gson.version>
+        <commons.pool.version>2.4.2</commons.pool.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.laioin.java.frame</groupId>
+            <artifactId>frame-logback</artifactId>
+            <version>${laioin.frame.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
@@ -32,15 +40,18 @@
         </dependency>
 
         <dependency>
-            <groupId>com.laioin.java.frame</groupId>
-            <artifactId>frame-logback</artifactId>
-            <version>${laioin.frame.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>${commons.pool.version}</version>
         </dependency>
+
+        <!-- spring start -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.10</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
+        <!-- spring end -->
     </dependencies>
 
     <build>
@@ -58,13 +69,16 @@
                         <configuration>
                             <transformers>
                                 <!-- 如果有spring 上下文 -->
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.laioin.frame.thrift.java.api.ServerMain</mainClass>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
                             </transformers>
