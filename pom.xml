@@ -12,6 +12,7 @@
         <module>frame-kafka</module>
         <module>frame-thrift</module>
         <module>frame-logback</module>
+        <module>frame-dowload</module>
     </modules>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
