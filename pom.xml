@@ -13,6 +13,8 @@
         <module>frame-thrift</module>
         <module>frame-logback</module>
         <module>frame-dowload</module>
+        <module>frame-reflex</module>
+        <module>frame-spring-boot</module>
     </modules>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>

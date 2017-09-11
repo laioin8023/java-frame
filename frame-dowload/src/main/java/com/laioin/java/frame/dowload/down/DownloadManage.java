@@ -44,7 +44,7 @@ public class DownloadManage {
     private String downRatio; // 下载百分比
     private long downStartDate; // 每一秒，下载开始时间
     private long downStartByte = 0; // 每一秒下载开始的字节数
-    private int resetCount = 3;  // 出现异常时，重试多少次，一次  1 秒
+    private int resetCount = 10;  // 出现异常时，重试多少次，一次  1 秒
     private int errCount = 0; // 连续几次异常
     private long downDate; // 还剩余多少时间下完
 
