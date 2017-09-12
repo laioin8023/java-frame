@@ -7,6 +7,9 @@ import com.laioin.frame.thrift.base.service.TUploadFile;
 import com.laioin.frame.thrift.base.service.TUserService;
 import com.laioin.frame.thrift.server.impl.TUploadFileServiceImpl;
 import com.laioin.frame.thrift.server.impl.TUserServiceImpl;
+import com.laioin.frame.thrift.spring.constant.ConstantKeys;
+import com.laioin.frame.thrift.spring.init.service.TInitService;
+import com.laioin.frame.thrift.spring.init.service.TInitServiceImpl;
 import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
@@ -44,6 +47,7 @@ public class ServerMain {
             TMultiplexedProcessor processor = new TMultiplexedProcessor();
             processor.registerProcessor("TUserService", new TUserService.Processor<TUserService.Iface>(new TUserServiceImpl()));
             processor.registerProcessor("TUploadFile", new TUploadFile.Processor<TUploadFile.Iface>(new TUploadFileServiceImpl()));
+            processor.registerProcessor(ConstantKeys.T_INIT_SERVICE_NAME, new TInitService.Processor<TInitService.Iface>(new TInitServiceImpl()));
             //创建服务器
             /**
              * TThreadPoolServer         这个在多线程并发的时候，吞吐量高。每一个连接都是一个线程

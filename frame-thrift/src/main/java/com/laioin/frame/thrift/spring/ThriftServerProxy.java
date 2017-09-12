@@ -1,5 +1,8 @@
 package com.laioin.frame.thrift.spring;
 
+import com.laioin.frame.thrift.spring.constant.ConstantKeys;
+import com.laioin.frame.thrift.spring.init.service.TInitService;
+import com.laioin.frame.thrift.spring.init.service.TInitServiceImpl;
 import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TCompactProtocol;
@@ -97,6 +100,7 @@ public class ThriftServerProxy extends Thread {
         if (null == ifaceService) {
             throw new ThriftException("服务接口信息为空", new NullPointerException());
         }
+        this.registerInitService(); // 注册，init service
         try {
             for (String serviceKey : this.ifaceService.keySet()) {  // 循环 服务名称
                 // key = 服务接口，value = 服务实现类
@@ -105,8 +109,8 @@ public class ThriftServerProxy extends Thread {
                     throw new ThriftException("服务配置为空，缺失服务接口和服务实现类.", new NullPointerException());
                 }
                 // 处理实现服务的类class
-                Class serviceProcessorClz = Class.forName(serviceBean.getServiceIface() + "$Processor");
-                Class serviceIface = Class.forName(serviceBean.getServiceIface() + "$Iface");// 服务接口
+                Class serviceProcessorClz = Class.forName(serviceBean.getServiceIface() + ConstantKeys.T_IN_CLASS_PROCESSOR);
+                Class serviceIface = Class.forName(serviceBean.getServiceIface() + ConstantKeys.T_IN_CLASS_IFACE);// 服务接口
                 //处理实现服务的类的构造函数
                 Constructor serviceProcessorCon = serviceProcessorClz.getConstructor(serviceIface);
 
@@ -117,9 +121,22 @@ public class ThriftServerProxy extends Thread {
                 TProcessor processorItem = (TProcessor) serviceProcessorCon.newInstance(serviceImplObject); // 实现类处理类
                 // 注册服务，param1 -> 服务名称 ， param2 = 处理实现服务的类
                 processor.registerProcessor(serviceBean.getServiceName(), processorItem);
+                // 把服务类对应服务名称的关系，加入到缓存
+                ThriftServiceCache.addService(serviceBean.getServiceIface(), serviceBean.getServiceName());
             }
         } catch (Exception e) {
             LGR.error("注册 thrift 服务时错误。", e);
         }
+    }
+
+    /**
+     * 注册，init service
+     */
+    private void registerInitService() {
+        ThriftServiceBean thriftServiceBean = new ThriftServiceBean();
+        thriftServiceBean.setServiceIface(TInitService.class.getName());
+        thriftServiceBean.setServiceImpl(TInitServiceImpl.class.getName());
+        thriftServiceBean.setServiceName(ConstantKeys.T_INIT_SERVICE_NAME);
+        ifaceService.put(thriftServiceBean.getServiceName(), thriftServiceBean);
     }
 }

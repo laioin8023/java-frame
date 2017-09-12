@@ -4,6 +4,8 @@ import com.laioin.frame.thrift.base.model.TResultModel;
 import com.laioin.frame.thrift.base.model.TUserInfoRequestParam;
 import com.laioin.frame.thrift.base.service.TUploadFile;
 import com.laioin.frame.thrift.base.service.TUserService;
+import com.laioin.frame.thrift.spring.constant.ConstantKeys;
+import com.laioin.frame.thrift.spring.init.service.TInitService;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -24,6 +26,7 @@ public class ClientMain {
 
     private static TUserService.Client userServiceClient = null;
     private static TUploadFile.Client uplaodServiceClient = null;
+    private static TInitService.Client initServiceClient = null;
 
     private static final Logger LGR = LoggerFactory.getLogger(ClientMain.class);
 
@@ -41,10 +44,14 @@ public class ClientMain {
             userServiceClient = new TUserService.Client(userProtocol);
             TMultiplexedProtocol uploadProtocol = new TMultiplexedProtocol(protocol, "TUploadFile");
             uplaodServiceClient = new TUploadFile.Client(uploadProtocol);
+            TMultiplexedProtocol initProtocol  = new TMultiplexedProtocol(protocol, ConstantKeys.T_INIT_SERVICE_NAME);
+            initServiceClient = new TInitService.Client(initProtocol);
+
             LGR.info("客户端创建成功。");
 
             ClientMain.getUserInfo(); // 获取用户信息
 
+            System.out.println(initServiceClient.getServices());
             transport.close(); // 关闭socket
         } catch (Exception e) {
             e.printStackTrace();

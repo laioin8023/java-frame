@@ -15,3 +15,7 @@ service TUserService{
 service TUploadFile{ // 上传文件
     string uploadFile(1:binary file); // 上传文件
 }
+
+service TInitService{
+    map<string,string> getServices(); // 获取服务class ，和 服务名称的对应关系
+}

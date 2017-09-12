@@ -31,7 +31,9 @@ public class TestThriftClient {
     @Test
     public void getUserInfo() {
 
-        ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient("TUserService", TUserService.class);
+        // ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient("TUserService", TUserService.class);
+
+        ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
         try {
             if (null != serviceClient) {
                 TUserService.Client userServiceClient = (TUserService.Client) serviceClient.serviceObject;
@@ -47,7 +49,7 @@ public class TestThriftClient {
             e.printStackTrace();
         } finally {
             // 归还service
-            thriftClientProxy.returnServiceCilent(serviceClient);
+            thriftClientProxy.returnServiceClient(serviceClient);
         }
     }
 }
