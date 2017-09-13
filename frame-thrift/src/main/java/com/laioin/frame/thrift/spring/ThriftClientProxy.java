@@ -70,7 +70,7 @@ public class ThriftClientProxy {
      * @param clz         service class 对象
      * @return
      */
-    public ServiceClient getServiceClient(String serviceName, Class clz) {
+    public <T> ServiceClient<T> getServiceClient(String serviceName, Class clz) {
         try {
             TProtocol protocol = thriftPoolManager.getConnection(); // 获取 连接
             // 如果是多个服务注册一个端口， 使用 TMultiplexedProtocol 区分服务
@@ -78,7 +78,7 @@ public class ThriftClientProxy {
             Class clientClz = Class.forName(clz.getName() + ConstantKeys.T_IN_CLASS_CLIENT);
             Constructor clientCon = clientClz.getConstructor(TProtocol.class);  // 服务客户端 构造函数
             // param1 = 创建服务客户端对象，param2 = thrift 连接对象
-            ServiceClient client = new ServiceClient(clientCon.newInstance(serviceProtocol), protocol);
+            ServiceClient<T> client = new ServiceClient(clientCon.newInstance(serviceProtocol), protocol);
             return client;
         } catch (Exception e) {
             LGR.error("获取 thrift 服务 [{}]. 时错误.", serviceName, e);

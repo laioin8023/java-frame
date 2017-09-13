@@ -98,3 +98,92 @@
 4. 客户端调用service 服务
 
         client.getUserName(11);  // 通过建立的 client 调用
+
+
+# thrift  Spring  应用
+1. 配置服务端，Spring  xml
+
+            <bean id="thriftServerProxy" name="thriftServerProxy" class="com.laioin.frame.thrift.spring.ThriftServerProxy">
+                <property name="port" value="8088"/> <!-- 配置端口 -->
+                <property name="ifaceService">  <!-- 配置服务 -->
+                    <map>
+                        <!-- 一个entry 就是一个服务 -->
+                        <entry key="TUserService">
+                            <bean class="com.laioin.frame.thrift.spring.ThriftServiceBean">
+                                <property name="serviceName" value="TUserService"/>
+                                <property name="serviceIface" value="com.laioin.frame.thrift.base.service.TUserService"/>
+                                <property name="serviceImpl" value="com.laioin.frame.thrift.server.impl.TUserServiceImpl"/>
+                            </bean>
+                        </entry>
+                        <!-- 配置多个服务 -->
+                        <entry key="TUploadFile"> <!-- 服务名称，客户区分时，使用 -->
+                            <bean class="com.laioin.frame.thrift.spring.ThriftServiceBean">
+                                <property name="serviceName" value="TUploadFile"/>
+                                <property name="serviceIface" value="com.laioin.frame.thrift.base.service.TUploadFile"/>
+                                <property name="serviceImpl"
+                                          value="com.laioin.frame.thrift.server.impl.TUploadFileServiceImpl"/>
+                            </bean>
+                        </entry>
+                    </map>
+                </property>
+            </bean>
+2. 启动 服务端：
+
+            @Autowired
+            private ThriftServerProxy thriftServerProxy;
+
+            @Test  // 启动 thrift 服务
+            public void startThriftServer() throws InterruptedException {
+                thriftServerProxy.start();
+                Thread.sleep(1000 * 60 * 60);
+            }
+
+3. 配置客户端 spring xml
+
+            <bean id="thriftPoolFactory" class="com.laioin.frame.thrift.spring.pool.ThriftPoolFactory">
+                <property name="host" value="localhost"/>
+                <property name="port" value="8088"/>
+                <property name="maxIdle" value="3"/> <!-- 最大空闲 -->
+                <property name="maxTotal" value="15"/> <!-- 最大数量 -->
+            </bean>
+
+            <bean id="defaultThriftPoolManager" class="com.laioin.frame.thrift.spring.pool.DefaultThriftPoolManager">
+                <property name="poolFactory" ref="thriftPoolFactory"/>
+            </bean>
+
+            <bean id="thriftClientProxy" name="thriftClientProxy" class="com.laioin.frame.thrift.spring.ThriftClientProxy">
+                <property name="thriftPoolManager" ref="defaultThriftPoolManager"/>
+            </bean>
+
+4.客户端调用服务端
+
+            @Autowired
+            private ThriftClientProxy thriftClientProxy;
+
+            @Test
+            public void getUserInfo() {
+                // 废弃的方法
+                // ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient("TUserService", TUserService.class);
+                //ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
+
+                ThriftClientProxy.ServiceClient<TUserService.Client> serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
+                try {
+                    if (null != serviceClient) {
+                        // 获得，服务的客户端
+                        TUserService.Client userServiceClient = serviceClient.serviceObject;
+                        // 获取用户信息
+                        LGR.info("调用 TUserService.getUserInfo() .....");
+                        TUserInfoRequestParam param = new TUserInfoRequestParam();
+                        param.setPhone("1316178171665").setUserId(1).setUserName("傻逼啊");
+                        // 调用服务端，获取返回
+                        TResultModel resultModel = userServiceClient.getUserInfo(param);
+                        LGR.info("调用 TUserService.getUserInfo() 返回：code=[{}],message=[{}],data=[{}]",
+                                resultModel.getCode(), resultModel.getMessage(), resultModel.getData());
+                    }
+                } catch (TException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 归还service client
+                    thriftClientProxy.returnServiceClient(serviceClient);
+                }
+            }

@@ -32,11 +32,12 @@ public class TestThriftClient {
     public void getUserInfo() {
 
         // ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient("TUserService", TUserService.class);
+        //ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
 
-        ThriftClientProxy.ServiceClient serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
+        ThriftClientProxy.ServiceClient<TUserService.Client> serviceClient = thriftClientProxy.getServiceClient(TUserService.class);
         try {
             if (null != serviceClient) {
-                TUserService.Client userServiceClient = (TUserService.Client) serviceClient.serviceObject;
+                TUserService.Client userServiceClient = serviceClient.serviceObject;
                 // 获取用户信息
                 LGR.info("调用 TUserService.getUserInfo() .....");
                 TUserInfoRequestParam param = new TUserInfoRequestParam();
@@ -48,7 +49,7 @@ public class TestThriftClient {
         } catch (TException e) {
             e.printStackTrace();
         } finally {
-            // 归还service
+            // 归还service client
             thriftClientProxy.returnServiceClient(serviceClient);
         }
     }
