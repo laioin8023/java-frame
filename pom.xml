@@ -12,8 +12,7 @@
         <module>frame-kafka</module>
         <module>frame-thrift</module>
         <module>frame-logback</module>
-        <module>frame-dowload</module>
-        <module>frame-reflex</module>
+        <module>frame-download</module>
         <module>frame-spring-boot</module>
     </modules>
     <packaging>pom</packaging>
@@ -24,6 +23,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
         <laioin.frame.version>1.0-SNAPSHOT</laioin.frame.version>
+        <gson.version>2.6.2</gson.version>
     </properties>
 
     <dependencies>
@@ -32,6 +32,13 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

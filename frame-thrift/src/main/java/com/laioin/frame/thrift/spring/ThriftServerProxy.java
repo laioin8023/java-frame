@@ -33,7 +33,6 @@ public class ThriftServerProxy extends Thread {
 
     /**
      * 第一层：key 是服务器名称，用于一个端口适用多个服务，value 是 服务
-     * 第二层： key 是服务接口， value 是 服务实现 类
      */
     private Map<String, ThriftServiceBean> ifaceService;  // 服务这里支持多个服务共享一个 端口
     private Integer port; // 端口

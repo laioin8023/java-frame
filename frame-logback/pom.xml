@@ -42,7 +42,7 @@
             </build>
         </profile>
         <profile>
-            <id>log-pro</id> <!-- 日志-正式 -->
+            <id>log-prod</id> <!-- 日志-正式 -->
             <build>
                 <resources>
                     <resource>

@@ -1,7 +1,7 @@
-package com.laioin.java.frame.dowload.util;
+package com.laioin.java.frame.download.util;
 
-import com.laioin.java.frame.dowload.cons.ByteKeys;
-import com.laioin.java.frame.dowload.cons.Keys;
+import com.laioin.java.frame.download.cons.ByteKeys;
+import com.laioin.java.frame.download.cons.Keys;
 
 import java.text.DecimalFormat;
 

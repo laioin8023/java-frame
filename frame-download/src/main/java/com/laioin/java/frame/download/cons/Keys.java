@@ -1,4 +1,4 @@
-package com.laioin.java.frame.dowload.cons;
+package com.laioin.java.frame.download.cons;
 
 /**
  * Created with IDEA

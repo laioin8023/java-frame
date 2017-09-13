@@ -21,7 +21,6 @@ public class DefaultThriftPoolManager implements IThriftPoolManager {
     @Override
     public void setPoolFactory(ThriftPoolFactory factory) {
         try {
-            System.out.println("---->" + factory);
             // param1 = 连接池创建工厂，param2 = 连接池配置对象
             objectPool = new GenericObjectPool<>(factory, factory);
         } catch (Exception e) {

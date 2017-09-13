@@ -1,6 +1,6 @@
-package com.laioin.java.frame.dowload.event;
+package com.laioin.java.frame.download.event;
 
-import com.laioin.java.frame.dowload.model.FileBean;
+import com.laioin.java.frame.download.model.FileBean;
 
 /**
  * Created with IDEA

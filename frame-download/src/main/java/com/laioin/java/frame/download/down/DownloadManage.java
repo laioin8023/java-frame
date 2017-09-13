@@ -1,10 +1,10 @@
-package com.laioin.java.frame.dowload.down;
+package com.laioin.java.frame.download.down;
 
-import com.laioin.java.frame.dowload.cons.HttpHeadKeys;
-import com.laioin.java.frame.dowload.cons.Keys;
-import com.laioin.java.frame.dowload.event.IProgressEvent;
-import com.laioin.java.frame.dowload.model.FileBean;
-import com.laioin.java.frame.dowload.util.Utils;
+import com.laioin.java.frame.download.cons.HttpHeadKeys;
+import com.laioin.java.frame.download.cons.Keys;
+import com.laioin.java.frame.download.event.IProgressEvent;
+import com.laioin.java.frame.download.model.FileBean;
+import com.laioin.java.frame.download.util.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;

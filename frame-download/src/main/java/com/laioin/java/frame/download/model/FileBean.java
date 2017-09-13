@@ -1,6 +1,6 @@
-package com.laioin.java.frame.dowload.model;
+package com.laioin.java.frame.download.model;
 
-import com.laioin.java.frame.dowload.util.Utils;
+import com.laioin.java.frame.download.util.Utils;
 
 /**
  * Created with IDEA
